@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <EditText android:id="@+id/edit_project_title"
+    <EditText android:id="@+id/edit_project_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/project_title_hint"
@@ -16,7 +16,7 @@
         android:inputType="text"/>
 
     <EditText android:id="@+id/edit_project_description"
-        android:layout_below="@id/edit_project_title"
+        android:layout_below="@id/edit_project_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/project_description_hint"
@@ -24,6 +24,7 @@
         android:inputType="textMultiLine"/>
 
     <Button
+        android:id="@+id/create_project_button"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
