@@ -34,7 +34,7 @@ public class ProjectListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         projectListAdapter = new ProjectListAdapter(getContext());
 
-        new FetchProjectsTask(fetchProjectsTaskCompleteListener).execute();
+        new FetchProjectsTask(getContext(),fetchProjectsTaskCompleteListener).execute();
     }
 
     @Nullable

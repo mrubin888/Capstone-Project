@@ -1,8 +1,11 @@
 package com.prog.quick.matt.quickprog.tasks;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.prog.quick.matt.quickprog.data.ProjectContract;
 import com.prog.quick.matt.quickprog.listeners.OnFetchProjectsTaskCompleteListener;
 import com.prog.quick.matt.quickprog.models.Project;
 
@@ -26,9 +29,11 @@ public class FetchProjectsTask extends AsyncTask<String, Void, ArrayList<Project
 
     private static final String TAG = FetchProjectsTask.class.getSimpleName();
 
+    private Context context;
     private OnFetchProjectsTaskCompleteListener listener;
 
-    public FetchProjectsTask(OnFetchProjectsTaskCompleteListener listener) {
+    public FetchProjectsTask(Context context, OnFetchProjectsTaskCompleteListener listener) {
+        this.context = context;
         this.listener = listener;
     }
 
@@ -101,15 +106,12 @@ public class FetchProjectsTask extends AsyncTask<String, Void, ArrayList<Project
             Log.e(TAG, e.getMessage());
         }
 
-        /* ArrayList<ContentValues> cvList = new ArrayList<ContentValues>();
-        for (Movie movie : movies) {
+        ArrayList<ContentValues> cvList = new ArrayList<ContentValues>();
+        for (Project project : projects) {
             ContentValues cv = new ContentValues();
-            cv.put(MovieEntry._ID, movie.getId());
-            cv.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
-            cv.put(MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
-            cv.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
-            cv.put(MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
-            cv.put(MovieEntry.COLUMN_OVERVIEW, movie.getOverview());
+            cv.put(ProjectContract.ProjectEntry._ID, project.getId());
+            cv.put(ProjectContract.ProjectEntry.COLUMN_NAME, project.getName());
+            cv.put(ProjectContract.ProjectEntry.COLUMN_DESCRIPTION, project.getDescription());
 
             cvList.add(cv);
         }
@@ -118,9 +120,9 @@ public class FetchProjectsTask extends AsyncTask<String, Void, ArrayList<Project
             ContentValues[] cvArr = new ContentValues[cvList.size()];
             cvList.toArray(cvArr);
 
-            int inserted = context.getContentResolver().bulkInsert(MovieEntry.CONTENT_URI, cvArr);
+            int inserted = context.getContentResolver().bulkInsert(ProjectContract.ProjectEntry.CONTENT_URI, cvArr);
             Log.d(TAG, "Inserted " + inserted);
-        } */
+        }
 
         return projects;
     }

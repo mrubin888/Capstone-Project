@@ -21,6 +21,9 @@
         <activity android:name=".activities.ProjectDetailActivity"
             android:parentActivityName=".activities.MainActivity"
             android:launchMode="singleTop"/>
+        <provider
+            android:authorities="com.prog.quick.matt.quickprog"
+            android:name=".data.ProjectContentProvider" />
     </application>
 
 </manifest>

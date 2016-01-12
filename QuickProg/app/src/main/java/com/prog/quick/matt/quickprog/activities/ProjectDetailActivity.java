@@ -25,15 +25,14 @@ public class ProjectDetailActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putString("id", getIntent().getStringExtra("id"));
 
-
-            Log.d(TAG, "onCreate: 2");
             ProjectDetailFragment projectDetailFragment = new ProjectDetailFragment();
             projectDetailFragment.setArguments(args);
 
-            Log.d(TAG, "onCreate: 3");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.project_details_container, projectDetailFragment)
                     .commit();
         }
     }
+
+
 }

@@ -62,7 +62,6 @@ public class CreateProjectTask extends AsyncTask<Project, Void, Boolean> {
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
-            //String dataStr =  "{\"name\": \"" + params[0].getName() + "\",\"description\":" + params[0].getDescription() + "}";
             JSONObject postData = new JSONObject();
             postData.put("name", params[0].getName());
             postData.put("description", params[0].getDescription());
@@ -81,11 +80,10 @@ public class CreateProjectTask extends AsyncTask<Project, Void, Boolean> {
 
             Log.d(TAG, "doInBackground: RESPONSE: " + responseCode);
         }
-        catch (IOException e) {
+        catch (Exception e) {
             Log.e(TAG, e.getMessage());
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
-        } finally {
+        }
+        finally {
             if (connection != null) {
                 connection.disconnect();
             }
