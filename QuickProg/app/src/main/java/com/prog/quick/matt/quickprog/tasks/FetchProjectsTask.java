@@ -46,7 +46,7 @@ public class FetchProjectsTask extends AsyncTask<String, Void, ArrayList<Project
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 
-        String urlStr = "http://10.0.2.2:8081/api/project/";
+        String urlStr = "http://162.243.8.98:8082/api/project";
         URL url = null;
         try {
             url = new URL(urlStr);
