@@ -76,4 +76,24 @@ public class Project {
                 + "]";
         return str;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Project project = (Project) o;
+
+        if (id == null || project.getId() == null) {
+            return false;
+        }
+
+        return id.equals(project.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return (id != null) ? id.hashCode() : 0;
+    }
 }

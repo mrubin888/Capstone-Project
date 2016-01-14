@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
+import com.prog.quick.matt.quickprog.DividerItemDecoration;
+import com.prog.quick.matt.quickprog.OnItemClickListener;
 import com.prog.quick.matt.quickprog.adapters.ProjectListAdapter;
 import com.prog.quick.matt.quickprog.R;
 import com.prog.quick.matt.quickprog.activities.CreateProjectActivity;
@@ -27,12 +29,11 @@ import java.util.ArrayList;
 public class ProjectListFragment extends Fragment {
 
     private static final String TAG = ProjectListFragment.class.getSimpleName();
-    private ProjectListAdapter projectListAdapter;
+    private RecyclerView projectRecyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        projectListAdapter = new ProjectListAdapter(getContext());
 
         new FetchProjectsTask(getContext(),fetchProjectsTaskCompleteListener).execute();
     }
@@ -41,7 +42,24 @@ public class ProjectListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
+
         View rootView = inflater.inflate(R.layout.project_list_fragment, container);
+
+        projectRecyclerView = (RecyclerView) rootView.findViewById(R.id.project_list_recycler);
+        projectRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        projectRecyclerView.setAdapter(new ProjectListAdapter(inflater, new OnItemClickListener() {
+            @Override
+            public void onItemClicked(View v, int pos) {
+                Log.d(TAG, "onItemClicked: " + pos);
+                ProjectListAdapter adapter = (ProjectListAdapter) projectRecyclerView.getAdapter();
+                Project clickedProject = adapter.getItem(pos);
+
+                Callback callback = (Callback) getActivity();
+                callback.onItemSelected(clickedProject.getId());
+            }
+        }));
+        projectRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,18 +70,6 @@ public class ProjectListFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        ListView projectListView = (ListView) rootView.findViewById(R.id.project_list);
-        projectListView.setAdapter(projectListAdapter);
-        projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ProjectListAdapter adapter = (ProjectListAdapter) parent.getAdapter();
-                Project clickedProject = (Project) adapter.getItem(position);
-
-                Callback callback = (Callback) getActivity();
-                callback.onItemSelected(clickedProject.getId());
-            }
-        });
 
         return rootView;
     }
@@ -72,7 +78,8 @@ public class ProjectListFragment extends Fragment {
         @Override
         public void onFetchProjectsTaskComplete(ArrayList<Project> projects) {
             Log.d(TAG, "onFetchProjectsTaskComplete: " + projects);
-            projectListAdapter.setProjects(projects);
+            ProjectListAdapter adapter = (ProjectListAdapter) projectRecyclerView.getAdapter();
+            adapter.setProjects(projects);
         }
     };
 

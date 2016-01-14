@@ -23,7 +23,19 @@
             android:launchMode="singleTop"/>
         <provider
             android:authorities="com.prog.quick.matt.quickprog"
-            android:name=".data.ProjectContentProvider" />
+            android:name=".data.ProjectContentProvider"
+            android:exported="true"/>
+        <receiver android:name="ProjectsWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_info"/>
+        </receiver>
+        <service android:name=".services.ProjectsWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
     </application>
 
 </manifest>

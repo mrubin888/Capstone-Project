@@ -11,6 +11,14 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        release {
+            storeFile file("capstone-keystore.jks")
+            storePassword "password"
+            keyAlias "MyAndroidKey"
+            keyPassword "password"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false

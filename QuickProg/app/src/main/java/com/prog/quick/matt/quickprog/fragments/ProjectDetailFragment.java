@@ -31,7 +31,7 @@ public class ProjectDetailFragment extends Fragment {
 
     private int progressIndex;
 
-    private enum Progress {
+    public enum Progress {
         NEW("New", R.color.colorNew),
         IN_PROGRESS("In progress", R.color.colorInProgress),
         COMPLETE("Complete", R.color.colorComplete);
@@ -113,6 +113,7 @@ public class ProjectDetailFragment extends Fragment {
         if (progress != Progress.COMPLETE) {
             Progress nextProgress = Progress.values()[progressIndex+1];
             progressButton.setText("Mark as " + nextProgress.getDisplayName());
+            progressButton.setContentDescription("Mark as " + nextProgress.getDisplayName());
             progressButton.setBackgroundColor(getResources().getColor(nextProgress.getColor()));
 
             progressButton.setOnClickListener(new View.OnClickListener() {

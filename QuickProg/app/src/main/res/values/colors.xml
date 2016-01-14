@@ -7,4 +7,6 @@
     <color name="colorNew">#FF8844</color>
     <color name="colorInProgress">#FFDD00</color>
     <color name="colorComplete">#00FF00</color>
+
+    <color name="colorWhite">#FFFFFF</color>
 </resources>
